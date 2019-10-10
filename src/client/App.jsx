@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import Loading from './components/Loading.jsx';
+
 export default class App extends Component {
   constructor() {
     super();
@@ -29,7 +31,9 @@ export default class App extends Component {
               <li key={info.d}>{info.id}</li>
             ))}
           </ul>
-        ) : null}
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }

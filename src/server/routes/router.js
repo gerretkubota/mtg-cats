@@ -5,6 +5,7 @@ module.exports = app => {
   app.get('/favorites', imageController.allFavorites);
   app.post('/favorite', imageController.favoriteAnImage);
   app.delete('/favorite', imageController.deleteFavorite);
+  // app.get('/favs', imageController.test);
 };
 
 /*
