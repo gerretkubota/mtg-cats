@@ -28,6 +28,11 @@ module.exports = {
           plugins: ['@babel/plugin-proposal-class-properties'],
         },
       },
+      {
+        test: /\.css?$/,
+        exclude: /node_modules/,
+        loaders: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
@@ -37,8 +42,9 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.resolve(__dirname, './src/'),
+    historyApiFallback: true,
     proxy: {
-      '/': {
+      '/api': {
         target: 'http://localhost:4000',
         secure: false,
       },

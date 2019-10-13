@@ -1,5 +1,5 @@
 const imageSearchUrl = 'https://api.thecatapi.com/v1/images/search';
-const favoritesUrl = 'https://api.thecatapi.com/v1/favourites';
+const favouritesUrl = 'https://api.thecatapi.com/v1/favourites';
 const axios = require('axios');
 
 const { API_KEY } = process.env;
@@ -10,36 +10,47 @@ console.log(_subid);
 
 module.exports = {
   allImages: (req, res) => {
-    const url = `${imageSearchUrl}?sub_id=${user}&limit=5&order=random&api_key=${API_KEY}`;
+    const { page } = req.params;
+    const url = `${imageSearchUrl}?sub_id=${user}&limit=100&page=${page}&order=asc&api_key=${API_KEY}`;
 
     axios
       .get(url)
       .then(result => res.status(200).send(result.data))
       .catch(err => res.status(400).send(err));
   },
-  allFavorites: (req, res) => {
-    const url = `${favoritesUrl}?sub_id=${user}&api_key=${API_KEY}`;
+  allFavourites: (req, res) => {
+    const url = `${favouritesUrl}?sub_id=${user}&api_key=${API_KEY}`;
 
     axios
       .get(url)
       .then(result => res.status(200).send(result.data))
       .catch(err => res.status(400).send(err));
   },
-  favoriteAnImage: (req, res) => {
-    const url = `${favoritesUrl}?sub_id=${user}&api_key=${API_KEY}`;
+  favouriteAnImage: (req, res) => {
+    const url = `${favouritesUrl}?api_key=${API_KEY}`;
+    const info = { image_id: req.body.image_id, sub_id: user };
 
     axios
-      .post(url, req.body)
-      .then(success => res.status(200).send(success.data.message))
+      .post(url, info)
+      .then(success => res.status(200).send(success.data))
       .catch(err => res.status(400).send(err));
   },
-  deleteFavorite: (req, res) => {
-    const { imageId } = req.body;
-    const url = `${favoritesUrl}/${imageId}?api_key=${API_KEY}`;
+  deleteFavourite: (req, res) => {
+    const { favourite_id } = req.params;
+    const url = `${favouritesUrl}/${favourite_id}?api_key=${API_KEY}`;
 
     axios
       .delete(url)
-      .then(success => res.status(200).send(success))
+      .then(success => res.status(200).send('deleted'))
+      .catch(err => res.status(400).send(err));
+  },
+  oneFavourite: (req, res) => {
+    const { favourite_id } = req.params;
+    const url = `${favouritesUrl}/${favourite_id}?api_key=${API_KEY}`;
+
+    axios
+      .get(url)
+      .then(success => res.status(200).send(success.data))
       .catch(err => res.status(400).send(err));
   },
 };

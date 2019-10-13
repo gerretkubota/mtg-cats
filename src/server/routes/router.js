@@ -1,16 +1,10 @@
 const imageController = require('../controllers/imageController.js');
 
 module.exports = app => {
-  app.get('/images', imageController.allImages);
-  app.get('/favorites', imageController.allFavorites);
-  app.post('/favorite', imageController.favoriteAnImage);
-  app.delete('/favorite', imageController.deleteFavorite);
-  // app.get('/favs', imageController.test);
+  app.get('/api/images/:page', imageController.allImages);
+  app.get('/api/myfavourites', imageController.allFavourites);
+  app.get('/api/favourite/:favourite_id', imageController.oneFavourite);
+  app.post('/api/favourite', imageController.favouriteAnImage);
+  app.delete('/api/unfavourite/:favourite_id', imageController.deleteFavourite);
+  app.get('/*', (req, res) => res.sendFile(__dirname, './public/index.html'));
 };
-
-/*
-{
-	"image_id": "9ccXTANkb",
-	"sub_id": "user-802"
-}
-*/
