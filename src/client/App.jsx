@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import NavLinks from './components/NavLinks.jsx';
 import CatsContainer from './containers/CatsContainer.jsx';
 
 export default class App extends Component {
@@ -77,7 +76,7 @@ export default class App extends Component {
         })
         .catch(err => alert('Could not gather images', err));
     } else {
-      alert("You've reached the end!");
+      alert('You\'ve reached the end!');
     }
   };
 
@@ -91,7 +90,7 @@ export default class App extends Component {
     const prevPage = currPage - 1;
 
     if (prevPage < 0) {
-      alert("You're at the beginning already!");
+      alert('You\'re at the beginning already!');
     } else {
       this.setState({ loading: true });
       axios
@@ -163,11 +162,11 @@ export default class App extends Component {
   };
 
   render() {
-    const { cats, favourites, loading } = this.state;
+    const { cats, favourites, loading, showBtns } = this.state;
 
     return (
       <div className="app-container">
-        <NavLinks />
+        {/* <NavLinks showBtns={showBtns} /> */}
         <CatsContainer
           cats={cats}
           favourites={favourites}

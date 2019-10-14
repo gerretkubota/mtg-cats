@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Loading from './Loading.jsx';
+import Loading from '../Loading/Loading.jsx';
 /**
  * Cat component will load an image or a loading component and the status
  * of an image is favourited or not depends on whether or not the data -

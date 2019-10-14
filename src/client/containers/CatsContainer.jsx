@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
-import CatsList from '../components/CatsList.jsx';
+import CatsList from '../components/CatsList/CatsList.jsx';
 
 const CatsContainer = ({
   cats,
@@ -12,7 +12,7 @@ const CatsContainer = ({
   handlePrev,
   loading,
 }) => (
-  <div>
+  <>
     <Switch>
       <Route
         exact
@@ -44,7 +44,7 @@ const CatsContainer = ({
         )}
       />
     </Switch>
-  </div>
+  </>
 );
 
 CatsContainer.propTypes = {
@@ -54,6 +54,7 @@ CatsContainer.propTypes = {
   handleNext: PropTypes.func,
   handlePrev: PropTypes.func,
   loading: PropTypes.bool,
+  showBtns: PropTypes.bool,
 };
 
 export default CatsContainer;
