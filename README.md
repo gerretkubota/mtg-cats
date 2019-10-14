@@ -9,6 +9,7 @@ Retrieving cat images and favouriting and unfavourting images
 - Retrieving and generating cat images via Cat Images tab
 - Retrieving and generating favourited cat images on Favourites tab
 - Favouriting/unfavouriting your favourite cat images by pressing on the button with the heart
+- Browse (scroll) through images on Cat Images tab
 
 ## <strong>How to use</strong>
 
@@ -26,6 +27,7 @@ Retrieving cat images and favouriting and unfavourting images
   ```
 - Step 3. (skip this step if running in dev mode) Open index.html that is in the directory of: build/index.html
 - Step 4. Interact
+  - Scrollable through images
   - Click on the button with the heart to favourite a cat image
     - <strong>Filled heart</strong> indicates a <strong>favourited</strong> cat image
     - <strong>Unfilled heart</strong> indicates a <strong>unfavourited</strong> cat image
