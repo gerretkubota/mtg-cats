@@ -10,6 +10,7 @@ const CatsContainer = ({
   handleFavourite,
   handleNext,
   handlePrev,
+  loading,
 }) => (
   <div>
     <Switch>
@@ -24,6 +25,7 @@ const CatsContainer = ({
             handleFavourite={handleFavourite}
             handleNext={handleNext}
             handlePrev={handlePrev}
+            loading={loading}
             showBtns
           />
         )}
@@ -36,6 +38,7 @@ const CatsContainer = ({
             {...props}
             images={favourites}
             handleFavourite={handleFavourite}
+            loading={loading}
             showBtns={false}
           />
         )}
@@ -50,6 +53,7 @@ CatsContainer.propTypes = {
   handleFavourite: PropTypes.func,
   handleNext: PropTypes.func,
   handlePrev: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 export default CatsContainer;

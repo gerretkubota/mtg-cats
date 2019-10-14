@@ -8,10 +8,11 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      cats: [],
+      cats: new Array(100).fill(null),
       favourites: [],
       currPage: 0,
       maxPage: 86,
+      loading: false,
     };
   }
 
@@ -39,22 +40,9 @@ export default class App extends Component {
           url: info.image.url,
         }));
 
-        this.setState({ cats: catsData, favourites: favouritesData }, () =>
-          console.log('success')
-        );
+        this.setState({ cats: catsData, favourites: favouritesData });
       })
       .catch(err => alert('Could not gather images and favourites', err));
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { currPage } = this.state;
-    console.log('prevState', prevState.currPage);
-    console.log('now state', currPage);
-    if (prevState.currPage !== currPage) {
-      const elem = document.querySelector('.cats-list-container');
-      // elem.scrollIntoView({ behavior: 'smooth' });
-      console.log(elem);
-    }
   }
 
   /**
@@ -70,16 +58,16 @@ export default class App extends Component {
     }));
 
   /**
-   * React event handler that will gather anothe set of cat images via API call
+   * React event handler that will gather another set of cat images via API call
    * and will set the new of cat images (array of objects) to the cats property
    * and increments the current page number to the state
    */
-  handleNext = async () => {
+  handleNext = () => {
     const { currPage, maxPage } = this.state;
     const nextPage = currPage + 1;
 
     if (nextPage <= maxPage) {
-      // set state to load cat components with loading
+      this.setState({ loading: true });
       axios
         .get(`/api/images/${nextPage}`)
         .then(result => {
@@ -93,6 +81,11 @@ export default class App extends Component {
     }
   };
 
+  /**
+   * React event handler that will gather the previous page's cat images via API call
+   * and will set the previous cat images (array of objects) to the cats property
+   * and decreement the current page number to the state
+   */
   handlePrev = () => {
     const { currPage } = this.state;
     const prevPage = currPage - 1;
@@ -100,6 +93,7 @@ export default class App extends Component {
     if (prevPage < 0) {
       alert("You're at the beginning already!");
     } else {
+      this.setState({ loading: true });
       axios
         .get(`/api/images/${prevPage}`)
         .then(result => {
@@ -110,6 +104,16 @@ export default class App extends Component {
     }
   };
 
+  /**
+   * @param {info} object (imageID, favouriteID, url)
+   * @param {index} number
+   * React event handler that will determine whether or not the current image
+   * that has been clicked should be favourited or unfavourited.
+   * Favouriting will make an API call to add the favourited image -
+   * under the user's account as well as the client state
+   * Unfavouriting will make an API call to delete the favourite image and deleting it -
+   * from the client state and user's account
+   */
   handleFavourite = (info, index) => {
     const { cats, favourites } = this.state;
     const currCats = cats.slice();
@@ -159,7 +163,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { cats, favourites } = this.state;
+    const { cats, favourites, loading } = this.state;
 
     return (
       <div className="app-container">
@@ -170,6 +174,7 @@ export default class App extends Component {
           handleFavourite={this.handleFavourite}
           handleNext={this.handleNext}
           handlePrev={this.handlePrev}
+          loading={loading}
         />
       </div>
     );
