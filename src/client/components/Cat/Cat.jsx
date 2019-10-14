@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import fav from './images/fav.png';
+import unfav from './images/unfav.png';
+
 import Loading from '../Loading/Loading.jsx';
 /**
  * Cat component will load an image or a loading component and the status
@@ -13,11 +16,17 @@ const Cat = ({ info, index, handleFavourite, loading }) => (
       {loading === true || info === null ? (
         <Loading />
       ) : (
-        <img src={info.url} alt={info.imageID} />
+        <img className="cat-image" src={info.url} alt={info.imageID} />
       )}
     </div>
     <button type="button" onClick={() => handleFavourite(info, index)}>
-      {loading === true || info === null ? '' : info.favouriteID ? '<3' : '</3'}
+      {loading === true || info === null ? (
+        ''
+      ) : info.favouriteID ? (
+        <img className="hearts" src={fav} alt="favourite" />
+      ) : (
+        <img className="hearts" src={unfav} alt="unfavourite" />
+      )}
     </button>
   </div>
 );
